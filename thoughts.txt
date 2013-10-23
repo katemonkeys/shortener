@@ -1,0 +1,8 @@
+Comments about this sprint:
+
+My url ended up being localhost:9393 not 4567....?
+
+
+The first thing I want to do is figure out the shortening function. Wasn't it just running the given URL through a SHA and taking the first five characters? Where is that? When I POST things through form.erb I get an empty string instead of a URL.
+
+When I try and create a table in my migration it says error, can't find table....but I am creating it??

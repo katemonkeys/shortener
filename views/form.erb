@@ -1,5 +1,5 @@
 <form id='myForm'>
-    <input type='text' name="url">
+    <input type='text' name="url" id="siteOfInterest">
     <input type="submit" value="Shorten">
 </form>
 <div id="shortcode"></div>
@@ -10,14 +10,29 @@
 </div>
 
 <script type="text/javascript">
-  $(function() {
-    $('#myForm').submit(function() {
-    $.post('/new', $("#myForm").serialize(), function(data){
-      var $url = $('<a>', {href: data}).append(data);
-      var $shortcode = $('<div>').append("Your Code:").append($url);
-      $('#shortcode').append($shortcode.hide().fadeIn());
-      });
-    return false;
-    });
-  });
+  // $(function() {
+  //   $('#myForm').submit(function() {
+  //   $.post('/new', $("#myForm").serialize(), function(data){
+  //     var $url = $('<a>', {href: data}).append(data);
+  //     var $shortcode = $('<div>').append("Your Code:").append($url);
+  //     $('#shortcode').append($shortcode.hide().fadeIn());
+  //     });
+  //   return false;
+  //   });
+  // });
+
+// I added an id to the text box and changed the submit to 
+// a button so that I didn't need the form bit and then just:
+// $(document).ready(function(){
+//  $("button").click(function(){
+//    alert("Value: " + $("#inText").val());
+//  });
+// });
+
+%form(action="/" method="POST")
+  %label(for="url")
+  %input(type="text" name="url" id="url")
+  %input(type="submit" value="Shorten")
+
 </script>
+

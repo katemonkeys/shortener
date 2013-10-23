@@ -1,12 +1,17 @@
 require 'sinatra'
 require 'active_record'
 require 'pry'
+require 'rubygems'
+# require 'sinatra/activerecord'
+require 'alphadecimal'
 
 ###########################################################
 # Configuration
 ###########################################################
 
+
 set :public_folder, File.dirname(__FILE__) + '/public'
+# set :database, "sqlite3:///database.db"
 
 configure :development, :production do
     ActiveRecord::Base.establish_connection(
@@ -28,14 +33,19 @@ end
 # http://guides.rubyonrails.org/association_basics.html
 
 class Link < ActiveRecord::Base
+    def shorten
+      self.id.alphadecimal
+    end
 end
+
 
 ###########################################################
 # Routes
 ###########################################################
 
 get '/' do
-    @links = [] # FIXME
+	#p Link.all
+    #@links = [] # FIXME
     erb :index
 end
 
@@ -44,7 +54,16 @@ get '/new' do
 end
 
 post '/new' do
-    # PUT CODE HERE TO CREATE NEW SHORTENED LINKS
+  @short_url = Link.find_or_create_by_url(params[:original])
+  if @short_url.valid?
+    erb :success
+  else
+    erb :index
+  end
+end
 end
 
-# MORE ROUTES GO HERE
+get '/:shortened' do
+	short_url = Link.find(params[:shortened])
+	redirect short_url.original
+end
